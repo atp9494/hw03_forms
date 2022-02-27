@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %} Главная страница {% endblock title %}
+{% block content %}
+  <div class="container py-5" align="justify">
+    <h1>Последние обновления на сайте</h1>
+    {% for post in page_obj %}   
+      <ul>
+        <li>
+          Автор: {{ post.author.get_full_name }}
+        </li>
+        <li>
+          Дата публикации: {{ post.pub_date|date:"d E Y" }}
+        </li>
+      </ul>      
+      <p>{{ post.text|linebreaksbr }}</p>
+      {% if post.group %} 
+        Группа: <a href="{% url 'posts:group' post.group.slug %}">{{ post.group }}</a>
+      {% endif %}
+      {% if not forloop.last %}<hr>{% endif %}
+    {% endfor %}
+  </div>
+{% include 'posts/includes/paginator.html' %}
+{% endblock %} 

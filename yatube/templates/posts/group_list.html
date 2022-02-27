@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %} Записи сообщества {{ group.title }} {% endblock title %}
+{% block content %}
+  <div class="container py-5">
+    <h1>Записи сообщества {{ group.title }}</h1>
+    <p>{{ group.description|linebreaksbr }}</p>
+    {% for post in page_obj %}
+      <ul>
+        <li>
+          Автор: {{ post.author.get_full_name }}
+        </li>
+        <li>
+          Дата публикации: {{ post.pub_date|date:"d E Y" }}
+        </li>
+      </ul>      
+      <p>{{ post.text|linebreaksbr }}</p>         
+      {% if not forloop.last %}<hr>{% endif %}
+    {% endfor %}
+  </div>
+{% include 'posts/includes/paginator.html' %}
+{% endblock %}
