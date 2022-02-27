@@ -9,7 +9,7 @@ from .forms import PostForm
 
 def index(request):
     posts = Post.objects.all()
-    paginator = Paginator(posts, 10) 
+    paginator = Paginator(posts, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     template = 'posts/index.html'
@@ -22,7 +22,7 @@ def index(request):
 def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
     posts = group.posts.all()
-    paginator = Paginator(posts, 10) 
+    paginator = Paginator(posts, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     template = 'posts/group_list.html'
@@ -38,7 +38,7 @@ def profile(request, username):
     author = get_object_or_404(User, username=username)
     posts = author.posts.all()
     number_of_posts = posts.count()
-    paginator = Paginator(posts, 10) 
+    paginator = Paginator(posts, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
@@ -55,10 +55,11 @@ def post_detail(request, post_id):
     author = post.author
     count = author.posts.all().count()
     context = {
-        'post': post, 
+        'post': post,
         'post_count': count
     }
     return render(request, 'posts/post_detail.html', context)
+
 
 @login_required
 def post_create(request):
