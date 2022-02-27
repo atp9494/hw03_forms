@@ -14,7 +14,7 @@
       </ul>      
       <p>{{ post.text|linebreaksbr }}</p>
       {% if post.group %} 
-        Группа: <a href="{% url 'posts:group' post.group.slug %}">{{ post.group }}</a>
+        Группа: <a href="{% url 'posts:group_posts' post.group.slug %}">{{ post.group }}</a>
       {% endif %}
       {% if not forloop.last %}<hr>{% endif %}
     {% endfor %}
