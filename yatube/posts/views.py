@@ -44,7 +44,7 @@ def profile(request, username):
         'author': author,
     }
     return render(
-        request, template, context, 
+        request, template, context,
         {'number_of_posts': number_of_posts}
     )
 
