@@ -2,11 +2,7 @@
 
 {% block title %}
 
-  {% if is_edit %}
-  Добавить запись
-  {% else %}
-  Редактировать запись
-  {% endif %}     
+  {% if is_edit %} Добавить запись {% else %} Редактировать запись {% endif %}     
 
 {%endblock%}
 
@@ -16,8 +12,17 @@
           <div class="col-md-8 p-5">
             <div class="card">
               <div class="card-header">       
-                Новый пост             
+                {% if is_edit %} Редактировать пост {% else %} Создать новый пост {% endif %}               
               </div>
+              {% if form.errors %}
+                {% for field in form %}
+                {% for error in field.errors %}
+                  <div class="alert alert-danger" role="alert">
+                  {{ field.label }}: {{ error|escape }}
+                  </div>
+                {% endfor %}
+                {% endfor %}
+              {% endif %}
               <div class="card-body">        
                 <form method="post" action="{% url 'posts:post_create' %}">
                   {% csrf_token %}
@@ -39,11 +44,7 @@
                   {% endfor %}
                   <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary">
-                      {% if is_edit %}
-                        Сохранить
-                      {% else %}
-                        Добавить
-                      {% endif %}               
+                      {% if is_edit %} Сохранить {% else %} Добавить {% endif %}               
                     </button> 
                   </div>
                 </form>
