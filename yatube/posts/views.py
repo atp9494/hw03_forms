@@ -43,7 +43,10 @@ def profile(request, username):
         'page_obj': get_page(request, posts),
         'author': author,
     }
-    return render(request, template, context, {'number_of_posts': number_of_posts})
+    return render(
+        request, template, context, 
+        {'number_of_posts': number_of_posts}
+    )
 
 
 def post_detail(request, post_id):
@@ -53,7 +56,7 @@ def post_detail(request, post_id):
         'post': post,
     }
     return render(
-        request, 'posts/post_detail.html', 
+        request, 'posts/post_detail.html',
         context, {'post_count': author.posts.all().count()}
     )
 
@@ -68,7 +71,7 @@ def post_create(request):
     post.author = request.user
     post.save()
     return redirect('posts:profile', request.user)
-    
+
 
 @login_required
 def post_edit(request, post_id):
