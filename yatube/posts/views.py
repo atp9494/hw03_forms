@@ -11,9 +11,9 @@ def get_page(request, post_list):
     paginator = Paginator(post_list, 10)
     return(paginator.get_page(request.GET.get('page')))
 
-        
+
 def index(request):
-    return render(request, 'posts/index.html',{
+    return render(request, 'posts/index.html', {
         'page_obj': get_page(request, Post.objects.all())
     })
 

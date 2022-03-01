@@ -6,7 +6,7 @@ User = get_user_model()
 
 
 class Group(models.Model):
-    verbose_name='Группа'
+    verbose_name = 'Группа'
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     description = models.TextField()
@@ -20,7 +20,7 @@ class Group(models.Model):
 
 
 class Post(models.Model):
-    verbose_name='Пост'
+    verbose_name = 'Пост'
     group = models.ForeignKey(
         Group,
         on_delete=models.SET_NULL,
