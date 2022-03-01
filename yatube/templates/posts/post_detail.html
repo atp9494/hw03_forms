@@ -16,18 +16,14 @@
           {% if post.group %}
                 <li class="list-group-item">
                   Группа: <a href="{% url 'posts:group_posts' post.group.slug %}"> {{ post.group }}</a>
+                </li>
           {% endif %}
-        </li>
         <li class="list-group-item">
           Автор: {{ post.author.get_full_name }}
+          <a href="{% url 'posts:profile' post.author.username %}">все посты пользователя</a>
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
-          Всего постов автора:  <span > {{ count }}</span>
-        </li>
-        <li class="list-group-item">
-          <a href="{% url 'posts:profile' post.author.username  %}">
-              Все посты пользователя
-          </a>
+          Всего постов автора:  <span > {{ author.posts.count }}</span>
         </li>
       </ul>
     </aside>
@@ -35,7 +31,7 @@
       <p>
         {{ post.text|linebreaks }}
       </p>
-      {% if request.user == posts.author %}
+      {% if user == author %}
         <a class="btn btn-primary" href="{% url 'posts:post_edit' post.pk %}">
           Редактировать запись
         </a>

@@ -9,56 +9,37 @@ from .models import Post, Group
 
 def get_page(request, post_list):
     paginator = Paginator(post_list, 10)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    return page_obj
+    return(paginator.get_page(request.GET.get('page')))
 
-
+        
 def index(request):
-    template = 'posts/index.html'
-    posts = Post.objects.all()
-    context = {
-        'page_obj': get_page(request, posts),
-    }
-    return render(request, template, context)
+    return render(request, 'posts/index.html',{
+        'page_obj': get_page(request, Post.objects.all())
+    })
 
 
 def group_posts(request, slug):
-    template = 'posts/group_list.html'
     group = get_object_or_404(Group, slug=slug)
-    posts = group.posts.all()
-    context = {
+    return render(request, 'posts/group_list.html', {
         'group': group,
-        'page_obj': get_page(request, posts),
-    }
-    return render(request, template, context)
+        'page_obj': get_page(request, group.posts.all())
+    })
 
 
 def profile(request, username):
-    template = 'posts/profile.html'
     author = get_object_or_404(User, username=username)
-    posts = author.posts.all()
-    number_of_posts = posts.count()
-    context = {
-        'page_obj': get_page(request, posts),
+    return render(request, 'posts/profile.html', {
         'author': author,
-    }
-    return render(
-        request, template, context,
-        {'number_of_posts': number_of_posts}
-    )
+        'page_obj': get_page(request, author.posts.all())
+    })
 
 
 def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
-    author = post.author
-    context = {
-        'post': post,
-    }
-    return render(
-        request, 'posts/post_detail.html',
-        context, {'post_count': author.posts.all().count()}
-    )
+    return render(request, 'posts/post_detail.html', {
+        'author': post.author,
+        'post': post
+    })
 
 
 @login_required
