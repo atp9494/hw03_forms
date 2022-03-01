@@ -9,7 +9,7 @@ class Group(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     description = models.TextField(
-        verbose_name = 'Группа'
+        verbose_name='Группа',
     )
 
     def __str__(self):
@@ -27,7 +27,7 @@ class Post(models.Model):
         related_name='posts',
         blank=True, null=True)
     text = models.TextField(
-        verbose_name = 'Пост'
+        verbose_name='Пост',
     )
     pub_date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(
