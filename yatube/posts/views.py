@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator
-from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, redirect
 
 from .forms import PostForm
 from .models import Post, Group
@@ -35,19 +35,17 @@ def profile(request, username):
 
 
 def post_detail(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
     return render(request, 'posts/post_detail.html', {
-        'author': post.author,
-        'post': post
+        'author': get_object_or_404(Post, id=post_id).author,
+        'post': get_object_or_404(Post, id=post_id)
     })
 
 
 @login_required
 def post_create(request):
-    template = 'posts/create_post.html'
     form = PostForm(request.POST or None)
     if not form.is_valid():
-        return render(request, template, {'form': form})
+        return render(request, 'posts/create_post.html', {'form': form})
     post = form.save(commit=False)
     post.author = request.user
     post.save()

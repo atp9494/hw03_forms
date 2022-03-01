@@ -6,10 +6,11 @@ User = get_user_model()
 
 
 class Group(models.Model):
-    verbose_name = 'Группа'
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
-    description = models.TextField()
+    description = models.TextField(
+        verbose_name = 'Группа'
+    )
 
     def __str__(self):
         return self.title
@@ -20,13 +21,14 @@ class Group(models.Model):
 
 
 class Post(models.Model):
-    verbose_name = 'Пост'
     group = models.ForeignKey(
         Group,
         on_delete=models.SET_NULL,
         related_name='posts',
         blank=True, null=True)
-    text = models.TextField()
+    text = models.TextField(
+        verbose_name = 'Пост'
+    )
     pub_date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(
         User,
