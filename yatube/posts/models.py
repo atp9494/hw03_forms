@@ -34,7 +34,8 @@ class Post(models.Model):
         User,
         on_delete=models.SET_NULL,
         related_name='posts',
-        blank=True, null=True)
+        blank=True, null=True,
+        verbose_name='Автор')
 
     class Meta:
         verbose_name = 'Пост'
